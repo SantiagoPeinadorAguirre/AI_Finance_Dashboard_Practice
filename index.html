@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>DataMind Analytics</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="./colors.css" />
+  <link rel="icon" type="image/webp" href="./Imagens-Referencia/Logo_IA.webp" />
+</head>
+
+<body class="flex min-h-screen flex-col bg-[var(--color-bg-main)] text-[var(--color-text-main)]">
+  <header class="sticky top-0 z-50 border-b border-[var(--color-border-soft)] bg-[var(--color-bg-main)] px-4 py-4 lg:px-6">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex items-center justify-between gap-4">
+        <button
+          class="flex items-center gap-3 text-left"
+          data-view-button="overview"
+          type="button"
+          aria-label="Go to overview"
+        >
+          <div class="flex h-11 w-11 items-center justify-center overflow-hidden border border-[var(--color-border-medium)] bg-[var(--color-bg-card)]">
+            <img
+              src="./Imagens-Referencia/Logo_IA.webp"
+              alt="DataMind Analytics logo"
+              class="h-full w-full object-cover"
+            />
+          </div>
+
+          <div>
+            <h1 class="text-base font-semibold tracking-tight">
+              DataMind Analytics
+            </h1>
+            <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+              Financial Intelligence Platform
+            </p>
+          </div>
+        </button>
+
+        <nav class="hidden items-center gap-8 text-xs uppercase tracking-[0.16em] text-[var(--color-text-muted)] lg:flex">
+          <button class="nav-link text-[var(--color-text-main)]" data-view-button="overview" type="button">
+            Overview
+          </button>
+
+          <button class="nav-link hover:text-[var(--color-text-main)]" data-view-button="portfolio" type="button">
+            Portfolio
+          </button>
+
+          <button class="nav-link hover:text-[var(--color-text-main)]" data-view-button="analytics" type="button">
+            Analytics
+          </button>
+
+          <button class="nav-link hover:text-[var(--color-text-main)]" data-view-button="reports" type="button">
+            Reports
+          </button>
+
+          <button
+            id="navAuthButton"
+            class="nav-link hover:text-[var(--color-text-main)]"
+            data-view-button="signin"
+            type="button"
+          >
+            Sign In
+          </button>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <div class="hidden text-right sm:block">
+            <p class="text-xs text-[var(--color-text-muted)]">Workspace</p>
+            <p id="workspaceStatus" class="text-sm font-medium">Guest Session</p>
+          </div>
+
+          <button
+            id="headerSignInButton"
+            class="border border-[var(--color-border-medium)] bg-[var(--color-bg-card)] px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-text-soft)]"
+            data-view-button="signin"
+            type="button"
+          >
+            Sign In
+          </button>
+
+          <div class="relative">
+            <button
+              id="headerUserButton"
+              class="hidden items-center gap-3 border border-[var(--color-border-medium)] bg-[var(--color-bg-card)] px-3 py-2 text-sm font-medium text-[var(--color-text-main)]"
+              type="button"
+              aria-label="Open account menu"
+            >
+              <img
+                id="headerUserAvatar"
+                src=""
+                alt="User avatar"
+                class="h-7 w-7 border border-[var(--color-border-medium)] object-cover"
+              />
+
+              <span id="headerUserFirstName">User</span>
+              <span class="text-[10px] text-[var(--color-text-muted)]">▼</span>
+            </button>
+
+            <div
+              id="accountDropdown"
+              class="absolute right-0 z-50 mt-3 hidden w-72 border border-[var(--color-border-medium)] bg-[var(--color-bg-panel)] p-4 shadow-2xl"
+            >
+              <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+                Account
+              </p>
+
+              <div class="mt-4 flex items-center gap-3">
+                <img
+                  id="dropdownUserAvatar"
+                  src=""
+                  alt="User avatar"
+                  class="h-10 w-10 border border-[var(--color-border-medium)] object-cover"
+                />
+
+                <div class="min-w-0">
+                  <p id="dropdownUserName" class="truncate text-sm font-medium">
+                    Signed in user
+                  </p>
+                  <p id="dropdownUserEmail" class="truncate text-xs text-[var(--color-text-muted)]">
+                    No email available
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-4 border-t border-[var(--color-border-soft)] pt-4">
+                <button
+                  class="w-full border border-[var(--color-border-medium)] bg-[var(--color-bg-card)] px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-text-soft)]"
+                  data-view-button="signin"
+                  type="button"
+                >
+                  Account Settings
+                </button>
+
+                <button
+                  id="headerSignOutButton"
+                  class="mt-3 w-full border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-warning)]"
+                  type="button"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button
+            id="mobileMenuButton"
+            class="border border-[var(--color-border-medium)] bg-[var(--color-bg-card)] px-3 py-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-text-soft)] lg:hidden"
+            type="button"
+            aria-label="Open navigation menu"
+          >
+            Menu
+          </button>
+        </div>
+      </div>
+
+      <nav
+        id="mobileMenu"
+        class="mt-4 hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4 lg:hidden"
+      >
+        <div class="grid gap-3 text-xs uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+          <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="overview" type="button">
+            Overview
+          </button>
+
+          <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="portfolio" type="button">
+            Portfolio
+          </button>
+
+          <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="analytics" type="button">
+            Analytics
+          </button>
+
+          <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="reports" type="button">
+            Reports
+          </button>
+
+          <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="signin" type="button">
+            Account
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 px-4 py-4 lg:px-6">
+    <div class="mx-auto max-w-7xl">
+      <section class="mb-4 grid gap-3 md:grid-cols-4">
+        <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4">
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Workspace</p>
+          <div class="mt-3 flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[var(--color-positive)]"></span>
+            <p class="text-sm font-medium">Ready</p>
+          </div>
+        </article>
+
+        <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4">
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Data View</p>
+          <p class="mt-3 text-sm font-medium">Financial Overview</p>
+        </article>
+
+        <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4">
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Workspace Mode</p>
+          <p class="mt-3 text-sm font-medium text-[var(--color-text-main)]">Personal Account</p>
+        </article>
+
+        <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4">
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Access</p>
+          <p id="authStatusCard" class="mt-3 text-sm font-medium text-[var(--color-warning)]">Private Workspace</p>
+        </article>
+      </section>
+
+      <section
+        data-view="overview"
+        class="app-view grid gap-4 lg:grid-cols-[1.7fr_0.8fr]"
+      >
+        <div class="space-y-4">
+          <section class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+            <div class="mb-8 flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
+              <div>
+                <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+                  Executive Overview
+                </p>
+
+                <h2 class="max-w-3xl text-3xl font-semibold tracking-tight text-[var(--color-text-main)] md:text-5xl">
+                  Financial data, structured for decisions.
+                </h2>
+
+                <p class="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-text-subtle)]">
+                  A long-term analytics platform designed to consolidate financial records, monitor performance, detect anomalies and support future AI-assisted reporting.
+                </p>
+              </div>
+
+              <div class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-4 lg:min-w-64">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Workspace Focus</p>
+                <p class="mt-3 text-lg font-semibold">Financial Overview</p>
+                <p class="mt-2 text-sm text-[var(--color-text-muted)]">
+                  Review key metrics, activity and account-level insights from one place.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-4">
+              <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Net Revenue</p>
+                <p id="netRevenueValue" class="mt-4 text-3xl font-semibold">€0</p>
+                <p id="netRevenueTrend" class="mt-3 text-sm text-[var(--color-text-muted)]">Waiting for records</p>
+              </article>
+
+              <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Operating Cost</p>
+                <p id="operatingCostValue" class="mt-4 text-3xl font-semibold">€0</p>
+                <p id="operatingCostTrend" class="mt-3 text-sm text-[var(--color-text-muted)]">Waiting for records</p>
+              </article>
+
+              <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Gross Margin</p>
+                <p id="grossMarginValue" class="mt-4 text-3xl font-semibold">0%</p>
+                <p id="grossMarginTrend" class="mt-3 text-sm text-[var(--color-text-muted)]">Waiting for records</p>
+              </article>
+
+              <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Risk Index</p>
+                <p id="riskIndexValue" class="mt-4 text-3xl font-semibold">Pending</p>
+                <p id="riskIndexTrend" class="mt-3 text-sm text-[var(--color-text-muted)]">Waiting for records</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
+            <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+              <div class="mb-6 flex items-center justify-between">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Performance</p>
+                  <h3 class="mt-2 text-lg font-semibold">Revenue Trend</h3>
+                </div>
+
+                <p class="text-xs text-[var(--color-text-muted)]">Last 6 months</p>
+              </div>
+
+              <div class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-4">
+                <div id="revenueChart" class="h-72"></div>
+              </div>
+            </article>
+
+            <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+              <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Allocation</p>
+              <h3 class="mt-2 text-lg font-semibold">Cost Structure</h3>
+
+              <div class="mt-8 space-y-5">
+                <div>
+                  <div class="mb-2 flex justify-between text-sm">
+                    <span class="text-[var(--color-text-subtle)]">Operations</span>
+                    <span>42%</span>
+                  </div>
+                  <div class="h-2 bg-[var(--color-bg-muted)]">
+                    <div class="h-2 w-[42%] bg-[var(--color-chart-bar)]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="mb-2 flex justify-between text-sm">
+                    <span class="text-[var(--color-text-subtle)]">Marketing</span>
+                    <span>28%</span>
+                  </div>
+                  <div class="h-2 bg-[var(--color-bg-muted)]">
+                    <div class="h-2 w-[28%] bg-[var(--color-chart-bar)]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="mb-2 flex justify-between text-sm">
+                    <span class="text-[var(--color-text-subtle)]">Product</span>
+                    <span>19%</span>
+                  </div>
+                  <div class="h-2 bg-[var(--color-bg-muted)]">
+                    <div class="h-2 w-[19%] bg-[var(--color-chart-bar)]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="mb-2 flex justify-between text-sm">
+                    <span class="text-[var(--color-text-subtle)]">Other</span>
+                    <span>11%</span>
+                  </div>
+                  <div class="h-2 bg-[var(--color-bg-muted)]">
+                    <div class="h-2 w-[11%] bg-[var(--color-chart-bar-muted)]"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+            <div class="mb-5 flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Records</p>
+                <h3 class="mt-2 text-lg font-semibold">Recent Transactions</h3>
+                <p class="mt-2 text-sm text-[var(--color-text-muted)]">
+                  Add, edit, delete and filter financial records from your private workspace.
+                </p>
+              </div>
+            </div>
+
+            <form
+              id="recordForm"
+              class="mb-6 hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-4"
+            >
+              <div class="grid gap-4 xl:grid-cols-[145px_145px_180px_minmax(0,1fr)_145px]">
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Date</span>
+                  <input
+                    id="recordDateInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    type="date"
+                    required
+                  />
+                </label>
+
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Type</span>
+                  <select
+                    id="recordTypeInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    required
+                  >
+                    <option value="Revenue">Revenue</option>
+                    <option value="Expense">Expense</option>
+                  </select>
+                </label>
+
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Category</span>
+                  <input
+                    id="recordCategoryInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    type="text"
+                    placeholder="Software, Sales, Rent..."
+                    maxlength="80"
+                    required
+                  />
+                </label>
+
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Description</span>
+                  <input
+                    id="recordDescriptionInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    type="text"
+                    placeholder="Example: Client payment, software subscription..."
+                    maxlength="140"
+                    required
+                  />
+                </label>
+
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Amount</span>
+                  <input
+                    id="recordAmountInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    required
+                  />
+                </label>
+              </div>
+
+              <div class="mt-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                <p class="text-xs leading-5 text-[var(--color-text-muted)]">
+                  Expenses are saved as negative amounts automatically.
+                </p>
+
+                <div class="flex flex-col gap-3 sm:flex-row">
+                  <button
+                    id="cancelEditButton"
+                    class="hidden border border-[var(--color-border-medium)] bg-[var(--color-bg-card)] px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-warning)]"
+                    type="button"
+                  >
+                    Cancel Edit
+                  </button>
+
+                  <button
+                    id="recordSubmitButton"
+                    class="border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-text-soft)]"
+                    type="submit"
+                  >
+                    Save Record
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <form
+              id="recordsFilterForm"
+              class="mb-4 hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-4"
+            >
+              <div class="grid gap-4 lg:grid-cols-[160px_1fr_180px_auto]">
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Filter Type</span>
+                  <select
+                    id="filterTypeInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                  >
+                    <option value="All">All</option>
+                    <option value="Revenue">Revenue</option>
+                    <option value="Expense">Expense</option>
+                  </select>
+                </label>
+
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Filter Category</span>
+                  <input
+                    id="filterCategoryInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    type="text"
+                    placeholder="Software, Sales, Rent..."
+                  />
+                </label>
+
+                <label class="grid min-w-0 gap-2 text-sm">
+                  <span class="text-xs uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Filter Month</span>
+                  <input
+                    id="filterMonthInput"
+                    class="w-full min-w-0 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-3 py-3 text-sm text-[var(--color-text-main)] outline-none"
+                    type="month"
+                  />
+                </label>
+
+                <div class="flex items-end gap-3">
+                  <button
+                    class="border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-text-soft)]"
+                    type="submit"
+                  >
+                    Apply
+                  </button>
+
+                  <button
+                    id="clearFiltersButton"
+                    class="border border-[var(--color-border-medium)] bg-[var(--color-bg-card)] px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-warning)]"
+                    type="button"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div class="overflow-x-auto border border-[var(--color-border-soft)]">
+              <table class="min-w-[980px] w-full border-collapse text-left text-sm">
+                <thead class="bg-[var(--color-bg-card)] text-xs uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+                  <tr>
+                    <th class="px-4 py-3 font-medium">Date</th>
+                    <th class="px-4 py-3 font-medium">Type</th>
+                    <th class="px-4 py-3 font-medium">Category</th>
+                    <th class="px-4 py-3 font-medium">Description</th>
+                    <th class="px-4 py-3 text-right font-medium">Amount</th>
+                    <th class="px-4 py-3 text-right font-medium">Status</th>
+                    <th class="px-4 py-3 text-right font-medium">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody id="transactionsTableBody" class="divide-y divide-[var(--color-border-soft)]">
+                  <tr>
+                    <td colspan="7" class="px-4 py-6 text-center text-[var(--color-text-muted)]">
+                      Sign in to load your financial records.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <aside class="space-y-4">
+          <section class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+            <div class="mb-5 flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Insights</p>
+                <h3 class="mt-2 text-lg font-semibold">Decision Notes</h3>
+              </div>
+
+              <span class="border border-[var(--color-border-medium)] px-3 py-1 text-xs uppercase tracking-[0.14em] text-[var(--color-warning)]">
+                Preview
+              </span>
+            </div>
+
+            <div class="space-y-4">
+              <article class="border-l border-[var(--color-border-strong)] pl-4">
+                <p class="text-sm font-medium">Current focus</p>
+                <p class="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
+                  Review the main signals behind revenue, costs, margin and risk before moving into deeper analysis.
+                </p>
+              </article>
+
+              <article class="border-l border-[var(--color-border-strong)] pl-4">
+                <p class="text-sm font-medium">Next capability</p>
+                <p class="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
+                  The workspace will evolve into a data-driven assistant for trends, anomalies and financial reporting.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Risk Monitoring</p>
+            <h3 class="mt-2 text-lg font-semibold">Control Checks</h3>
+
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center justify-between border-b border-[var(--color-border-soft)] pb-3">
+                <span class="text-sm text-[var(--color-text-subtle)]">Duplicate records</span>
+                <span class="text-sm text-[var(--color-positive)]">Clear</span>
+              </div>
+
+              <div class="flex items-center justify-between border-b border-[var(--color-border-soft)] pb-3">
+                <span class="text-sm text-[var(--color-text-subtle)]">Missing values</span>
+                <span class="text-sm text-[var(--color-warning)]">Review</span>
+              </div>
+
+              <div class="flex items-center justify-between border-b border-[var(--color-border-soft)] pb-3">
+                <span class="text-sm text-[var(--color-text-subtle)]">Unusual expenses</span>
+                <span class="text-sm text-[var(--color-warning)]">Review</span>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-[var(--color-text-subtle)]">Cashflow variance</span>
+                <span class="text-sm text-[var(--color-positive)]">Normal</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Workspace Roadmap</p>
+            <h3 class="mt-2 text-lg font-semibold">Product Plan</h3>
+
+            <div class="mt-6 space-y-5">
+              <div class="flex gap-3">
+                <span class="mt-1 h-2 w-2 bg-[var(--color-positive)]"></span>
+                <div>
+                  <p class="text-sm font-medium">Interface foundation</p>
+                  <p class="text-sm text-[var(--color-text-muted)]">Active</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <span class="mt-1 h-2 w-2 bg-[var(--color-warning)]"></span>
+                <div>
+                  <p class="text-sm font-medium">Secure access</p>
+                  <p class="text-sm text-[var(--color-text-muted)]">Active</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <span class="mt-1 h-2 w-2 bg-[var(--color-warning)]"></span>
+                <div>
+                  <p class="text-sm font-medium">Financial records</p>
+                  <p class="text-sm text-[var(--color-text-muted)]">Active</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <span class="mt-1 h-2 w-2 bg-[var(--color-warning)]"></span>
+                <div>
+                  <p class="text-sm font-medium">AI reporting</p>
+                  <p class="text-sm text-[var(--color-text-muted)]">Planned</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section
+        data-view="portfolio"
+        class="app-view hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6"
+      >
+        <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+          Portfolio
+        </p>
+
+        <h2 class="text-3xl font-semibold tracking-tight">
+          Portfolio Management
+        </h2>
+
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--color-text-subtle)]">
+          This section will later display connected assets, financial accounts, business units and portfolio-level performance.
+        </p>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Assets</p>
+            <p class="mt-4 text-3xl font-semibold">Pending</p>
+          </article>
+
+          <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Accounts</p>
+            <p class="mt-4 text-3xl font-semibold">Pending</p>
+          </article>
+
+          <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Allocation</p>
+            <p class="mt-4 text-3xl font-semibold">Pending</p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        data-view="analytics"
+        class="app-view hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6"
+      >
+        <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+          Analytics
+        </p>
+
+        <h2 class="text-3xl font-semibold tracking-tight">
+          Advanced Analytics
+        </h2>
+
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--color-text-subtle)]">
+          This section will later include dynamic charts, filters, anomaly detection, trend analysis and database-driven metrics.
+        </p>
+
+        <div class="mt-8 border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-6">
+          <p class="text-sm text-[var(--color-warning)]">
+            Analytics engine pending backend and database integration.
+          </p>
+        </div>
+      </section>
+
+      <section
+        data-view="reports"
+        class="app-view hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6"
+      >
+        <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+          Reports
+        </p>
+
+        <h2 class="text-3xl font-semibold tracking-tight">
+          Financial Reports
+        </h2>
+
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--color-text-subtle)]">
+          This section will later generate structured reports based on real stored data. AI-generated reporting will only be enabled after the backend and database are connected.
+        </p>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-2">
+          <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Monthly Report</p>
+            <p class="mt-4 text-sm text-[var(--color-text-subtle)]">Pending real data source.</p>
+          </article>
+
+          <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+            <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">AI Summary</p>
+            <p class="mt-4 text-sm text-[var(--color-text-subtle)]">Pending real AI integration.</p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        data-view="signin"
+        class="app-view hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-6"
+      >
+        <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+              Authentication
+            </p>
+
+            <h2 class="max-w-2xl text-3xl font-semibold tracking-tight md:text-5xl">
+              Secure access for financial workspaces.
+            </h2>
+
+            <p class="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-text-subtle)]">
+              This area connects the application with Supabase Auth and Google Sign-In. Once enabled, users will access their own financial records, reports and analytics securely.
+            </p>
+
+            <div class="mt-8 grid gap-4 md:grid-cols-2">
+              <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Identity</p>
+                <p class="mt-4 text-2xl font-semibold">Google</p>
+                <p id="googleProviderStatus" class="mt-3 text-sm text-[var(--color-warning)]">Pending configuration</p>
+              </article>
+
+              <article class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">Workspace Access</p>
+                <p class="mt-4 text-2xl font-semibold">Secure Session</p>
+                <p id="supabaseProjectStatus" class="mt-3 text-sm text-[var(--color-warning)]">Pending project setup</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="border border-[var(--color-border-soft)] bg-[var(--color-bg-card)] p-6">
+            <div class="mb-8">
+              <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+                Sign In
+              </p>
+
+              <h3 class="mt-3 text-2xl font-semibold">
+                Access your workspace
+              </h3>
+
+              <p id="authDescription" class="mt-3 text-sm leading-6 text-[var(--color-text-muted)]">
+                Your private workspace is protected with Google Sign-In. Use this page to review your account session and access details.
+              </p>
+            </div>
+
+            <button
+              id="googleSignInButton"
+              class="flex w-full items-center justify-center gap-3 border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-5 py-4 text-sm font-medium text-[var(--color-text-soft)]"
+              type="button"
+            >
+              <span class="flex h-6 w-6 items-center justify-center border border-[var(--color-border-medium)] text-xs font-semibold">
+                G
+              </span>
+              Sign in with Google
+            </button>
+
+            <button
+              id="signOutButton"
+              class="mt-3 hidden w-full border border-[var(--color-border-medium)] bg-[var(--color-bg-main)] px-5 py-4 text-sm font-medium text-[var(--color-text-soft)]"
+              type="button"
+            >
+              Sign out
+            </button>
+
+            <div class="mt-6 border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4">
+              <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+                Current Status
+              </p>
+
+              <div class="mt-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-[var(--color-text-subtle)]">Workspace access</span>
+                  <span id="supabaseStatusLabel" class="text-sm text-[var(--color-warning)]">Missing</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-[var(--color-text-subtle)]">Identity provider</span>
+                  <span id="googleStatusLabel" class="text-sm text-[var(--color-warning)]">Pending</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-[var(--color-text-subtle)]">Session</span>
+                  <span id="sessionStatusLabel" class="text-sm text-[var(--color-warning)]">Inactive</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="userPanel"
+              class="mt-6 hidden border border-[var(--color-border-soft)] bg-[var(--color-bg-panel)] p-4"
+            >
+              <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+                Signed In User
+              </p>
+
+              <div class="mt-4 flex items-center gap-4">
+                <img
+                  id="userAvatar"
+                  src=""
+                  alt="User avatar"
+                  class="hidden h-12 w-12 border border-[var(--color-border-medium)] object-cover"
+                />
+
+                <div>
+                  <p id="userName" class="text-sm font-medium">Unknown user</p>
+                  <p id="userEmail" class="mt-1 text-sm text-[var(--color-text-muted)]">No email available</p>
+                </div>
+              </div>
+            </div>
+
+            <p id="authMessage" class="mt-6 text-xs leading-6 text-[var(--color-text-muted)]">
+              Your session is managed securely. Sign out when you finish working on a shared device.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="mt-auto border-t border-[var(--color-border-soft)] px-4 py-8 lg:px-6">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
+        <section>
+          <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 items-center justify-center overflow-hidden border border-[var(--color-border-medium)] bg-[var(--color-bg-card)]">
+              <img
+                src="./Imagens-Referencia/Logo_IA.webp"
+                alt="DataMind Analytics logo"
+                class="h-full w-full object-cover"
+              />
+            </div>
+
+            <div>
+              <p class="text-sm font-semibold">DataMind Analytics</p>
+              <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+                Financial Intelligence Platform
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-5 max-w-md text-sm leading-6 text-[var(--color-text-muted)]">
+            A financial intelligence workspace for reviewing performance, organizing records and preparing future data-driven reporting workflows.
+          </p>
+        </section>
+
+        <section>
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+            Product
+          </p>
+
+          <div class="mt-4 grid gap-3 text-sm text-[var(--color-text-subtle)]">
+            <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="overview" type="button">
+              Overview
+            </button>
+
+            <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="analytics" type="button">
+              Analytics
+            </button>
+
+            <button class="text-left hover:text-[var(--color-text-main)]" data-view-button="reports" type="button">
+              Reports
+            </button>
+          </div>
+        </section>
+
+        <section>
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+            Stack
+          </p>
+
+          <div class="mt-4 grid gap-3 text-sm text-[var(--color-text-subtle)]">
+            <p>HTML</p>
+            <p>Tailwind CSS</p>
+            <p>JavaScript</p>
+            <p>Supabase Auth</p>
+          </div>
+        </section>
+
+        <section>
+          <p class="text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+            Status
+          </p>
+
+          <div class="mt-4 grid gap-3 text-sm text-[var(--color-text-subtle)]">
+            <p>Secure access: Enabled</p>
+            <p>Financial records: Active</p>
+            <p>Reporting: Planned</p>
+            <p>Workspace: Development</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="mt-8 flex flex-col justify-between gap-3 border-t border-[var(--color-border-soft)] pt-5 text-xs text-[var(--color-text-muted)] sm:flex-row">
+        <p>
+          © 2026 DataMind Analytics. Development project.
+        </p>
+
+        <p>
+          Built as a development workspace for financial analytics practice.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./chart.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+:root {
+  --color-bg-main: #030712;
+  --color-bg-panel: #070b14;
+  --color-bg-card: #0b1220;
+  --color-bg-card-soft: #111827;
+  --color-bg-muted: #151a24;
+
+  --color-text-main: #f9fafb;
+  --color-text-soft: #d1d5db;
+  --color-text-muted: #6b7280;
+  --color-text-subtle: #9ca3af;
+
+  --color-border-soft: #1f2937;
+  --color-border-medium: #374151;
+  --color-border-strong: #4b5563;
+
+  --color-primary: #e5e7eb;
+  --color-accent: #22c55e;
+  --color-accent-soft: #052e1b;
+
+  --color-positive: #22c55e;
+  --color-negative: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #38bdf8;
+
+  --color-chart-bar: #d1d5db;
+  --color-chart-bar-muted: #4b5563;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "ai_finance_dashboard_practice",
+  "version": "1.0.0",
+  "description": "Long-term web project to build a modern data analytics platform with a tech-focused interface. We will start with frontend using HTML, Tailwind and color-only CSS, then add backend, database, dashboards, metrics and AI insights. This is not a simple demo, but a progressive full-stack app.",
+  "main": "chart.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SantiagoPeinadorAguirre/AI_Finance_Dashboard_Practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SantiagoPeinadorAguirre/AI_Finance_Dashboard_Practice/issues"
+  },
+  "homepage": "https://github.com/SantiagoPeinadorAguirre/AI_Finance_Dashboard_Practice#readme",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
